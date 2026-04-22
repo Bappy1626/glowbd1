@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GlowBD – Premium Cosmetics for Bangladeshi Women</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose:    #c9607a;
+      --blush:   #f4d6de;
+      --gold:    #b8935a;
+      --cream:   #fdf8f5;
+      --ink:     #1a1a1a;
+      --mid:     #6b6b6b;
+      --light:   #f0e8e2;
+      --white:   #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 56px;
+      background: rgba(253,248,245,0.82);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(201,96,122,0.12);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--rose);
+      letter-spacing: .04em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: .82rem; font-weight: 500; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--ink);
+      text-decoration: none; transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--rose); }
+    .nav-cta {
+      font-size: .82rem; font-weight: 500; letter-spacing: .06em;
+      text-transform: uppercase; padding: 8px 18px;
+      background: var(--rose); color: #fff; border-radius: 30px;
+      text-decoration: none; transition: background .2s;
+    }
+    .nav-cta:hover { background: #b04f68; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 5% 80px;
+      background: linear-gradient(160deg, #fff0f4 0%, #fdf8f5 55%, #fce8d5 100%);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -120px; right: -120px;
+      width: 520px; height: 520px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,96,122,.15) 0%, transparent 70%);
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -80px; left: -80px;
+      width: 380px; height: 380px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(184,147,90,.12) 0%, transparent 70%);
+    }
+    .hero-eyebrow {
+      font-size: .78rem; font-weight: 500; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--rose);
+      margin-bottom: 1.2rem;
+      opacity: 0; animation: fadeUp .8s .2s forwards;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 6vw, 5rem);
+      line-height: 1.12;
+      max-width: 680px;
+      opacity: 0; animation: fadeUp .8s .4s forwards;
+    }
+    .hero h1 em { color: var(--rose); font-style: italic; }
+    .hero-sub {
+      font-size: 1.05rem; font-weight: 300; color: var(--mid);
+      max-width: 500px; margin: 1.6rem auto 0;
+      line-height: 1.7;
+      opacity: 0; animation: fadeUp .8s .6s forwards;
+    }
+    .hero-actions {
+      display: flex; gap: 1rem; margin-top: 2.4rem; flex-wrap: wrap; justify-content: center;
+      opacity: 0; animation: fadeUp .8s .8s forwards;
+    }
+    .btn-primary {
+      padding: 14px 34px; border-radius: 30px;
+      background: var(--rose); color: #fff;
+      font-size: .9rem; font-weight: 500; letter-spacing: .04em;
+      text-decoration: none; transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 4px 20px rgba(201,96,122,.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,96,122,.4); }
+    .btn-ghost {
+      padding: 14px 34px; border-radius: 30px;
+      border: 1.5px solid var(--rose); color: var(--rose);
+      font-size: .9rem; font-weight: 500;
+      text-decoration: none; transition: background .2s;
+    }
+    .btn-ghost:hover { background: var(--blush); }
+
+    /* floating product images */
+    .hero-img {
+      margin-top: 4rem; position: relative;
+      opacity: 0; animation: fadeUp .9s 1s forwards;
+    }
+    .hero-img .product-showcase {
+      display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;
+    }
+    .product-pill {
+      background: rgba(255,255,255,.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(201,96,122,.18);
+      border-radius: 20px;
+      padding: 1.4rem 1.8rem;
+      display: flex; flex-direction: column; align-items: center;
+      gap: .6rem; width: 140px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.07);
+      transition: transform .3s;
+    }
+    .product-pill:hover { transform: translateY(-6px); }
+    .product-pill .emoji { font-size: 2.4rem; }
+    .product-pill span { font-size: .78rem; font-weight: 500; color: var(--ink); text-align: center; }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      overflow: hidden; background: var(--rose);
+      padding: 12px 0; white-space: nowrap;
+    }
+    .marquee-track {
+      display: inline-block;
+      animation: scroll 22s linear infinite;
+    }
+    .marquee-track span {
+      font-size: .78rem; font-weight: 500; letter-spacing: .12em;
+      text-transform: uppercase; color: #fff; margin: 0 2rem;
+    }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 90px 5%; }
+    .section-label {
+      font-size: .75rem; font-weight: 500; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--rose); margin-bottom: .8rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      line-height: 1.2; max-width: 520px;
+    }
+    .section-sub {
+      font-size: .95rem; color: var(--mid); margin-top: .8rem;
+      max-width: 480px; line-height: 1.7;
+    }
+
+    /* ── CATEGORIES ── */
+    .categories { background: var(--white); }
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.2rem; margin-top: 3rem;
+    }
+    .cat-card {
+      border-radius: 18px; overflow: hidden;
+      aspect-ratio: 3/4; position: relative; cursor: pointer;
+      transition: transform .3s;
+    }
+    .cat-card:hover { transform: scale(1.03); }
+    .cat-card .bg {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem;
+    }
+    .cat-card.lip    .bg { background: linear-gradient(135deg,#fce4ec,#f8bbd0); }
+    .cat-card.skin   .bg { background: linear-gradient(135deg,#fff8e1,#ffe082); }
+    .cat-card.eye    .bg { background: linear-gradient(135deg,#e8eaf6,#c5cae9); }
+    .cat-card.face   .bg { background: linear-gradient(135deg,#fce4ec,#f8bbd0,#fff8e1); }
+    .cat-card.hair   .bg { background: linear-gradient(135deg,#e8f5e9,#c8e6c9); }
+    .cat-card .cat-label {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent,rgba(0,0,0,.45));
+      color: #fff; padding: 1.2rem 1rem .9rem;
+      font-size: .9rem; font-weight: 500;
+    }
+    .cat-card .cat-label small {
+      display: block; font-size: .72rem; opacity: .8; margin-top: 2px;
+    }
+
+    /* ── PRODUCTS ── */
+    .products { background: var(--cream); }
+    .products-header {
+      display: flex; align-items: flex-end;
+      justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .filter-tabs {
+      display: flex; gap: .6rem; flex-wrap: wrap;
+      margin-top: 1.2rem;
+    }
+    .tab {
+      padding: 7px 16px; border-radius: 20px; font-size: .8rem; font-weight: 500;
+      border: 1.5px solid #ddd; background: transparent; cursor: pointer;
+      transition: all .2s; color: var(--mid);
+    }
+    .tab.active, .tab:hover {
+      background: var(--rose); border-color: var(--rose); color: #fff;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 1.6rem;
+    }
+    .product-card {
+      background: var(--white); border-radius: 20px; overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,.06);
+      transition: transform .3s, box-shadow .3s; cursor: pointer;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 36px rgba(0,0,0,.12);
+    }
+    .product-img {
+      height: 200px; display: flex; align-items: center; justify-content: center;
+      font-size: 5rem; position: relative;
+    }
+    .product-img .badge {
+      position: absolute; top: 12px; left: 12px;
+      background: var(--rose); color: #fff;
+      font-size: .68rem; font-weight: 600; letter-spacing: .05em;
+      padding: 4px 10px; border-radius: 20px;
+    }
+    .product-img .badge.new { background: var(--gold); }
+    .product-info { padding: 1rem 1.2rem 1.2rem; }
+    .product-cat {
+      font-size: .72rem; font-weight: 500; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--rose); margin-bottom: .3rem;
+    }
+    .product-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; line-height: 1.3; margin-bottom: .5rem;
+    }
+    .product-desc { font-size: .8rem; color: var(--mid); line-height: 1.5; margin-bottom: .9rem; }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; }
+    .product-price {
+      font-size: 1rem; font-weight: 600; color: var(--ink);
+    }
+    .product-price span { font-size: .75rem; font-weight: 400; color: var(--mid); }
+    .add-btn {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--rose); color: #fff;
+      border: none; font-size: 1.2rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .2s, background .2s;
+    }
+    .add-btn:hover { transform: scale(1.12); background: #b04f68; }
+    .stars { font-size: .78rem; color: var(--gold); margin-bottom: .4rem; }
+
+    /* ── FEATURE STRIP ── */
+    .features {
+      background: var(--ink); padding: 70px 5%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2.5rem;
+    }
+    .feat-item { text-align: center; }
+    .feat-icon { font-size: 2.4rem; margin-bottom: .8rem; }
+    .feat-title { font-size: .9rem; font-weight: 600; color: #fff; margin-bottom: .4rem; }
+    .feat-desc { font-size: .8rem; color: rgba(255,255,255,.5); line-height: 1.6; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { background: var(--blush); text-align: center; }
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .testi-card {
+      background: var(--white); border-radius: 18px;
+      padding: 1.8rem; text-align: left;
+      box-shadow: 0 2px 14px rgba(0,0,0,.05);
+    }
+    .testi-stars { color: var(--gold); margin-bottom: .8rem; font-size: .9rem; }
+    .testi-text {
+      font-family: 'Playfair Display', serif;
+      font-size: .95rem; line-height: 1.7; color: var(--ink);
+      margin-bottom: 1rem;
+    }
+    .testi-author { display: flex; align-items: center; gap: .8rem; }
+    .testi-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; background: var(--blush);
+    }
+    .testi-name { font-size: .85rem; font-weight: 600; }
+    .testi-loc { font-size: .75rem; color: var(--mid); }
+
+    /* ── PROMO BANNER ── */
+    .promo {
+      background: linear-gradient(135deg, var(--rose) 0%, #8b3a52 100%);
+      padding: 80px 5%; text-align: center; color: #fff;
+    }
+    .promo h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: 1rem;
+    }
+    .promo p { font-size: 1rem; opacity: .85; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .promo .btn-white {
+      padding: 14px 36px; border-radius: 30px;
+      background: #fff; color: var(--rose);
+      font-size: .9rem; font-weight: 600;
+      text-decoration: none; display: inline-block;
+      transition: transform .2s;
+    }
+    .promo .btn-white:hover { transform: scale(1.04); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink); color: rgba(255,255,255,.7);
+      padding: 60px 5% 30px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem; margin-bottom: 3rem;
+    }
+    .footer-brand .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; color: var(--rose); margin-bottom: .8rem;
+    }
+    .footer-brand p { font-size: .85rem; line-height: 1.7; max-width: 260px; }
+    .footer-col h4 {
+      font-size: .82rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: #fff; margin-bottom: 1rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: .6rem; }
+    .footer-col a {
+      font-size: .85rem; color: rgba(255,255,255,.6);
+      text-decoration: none; transition: color .2s;
+    }
+    .footer-col a:hover { color: var(--rose); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.1);
+      padding-top: 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+      font-size: .8rem;
+    }
+    .social-links { display: flex; gap: 1rem; }
+    .social-links a {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; text-decoration: none;
+      transition: border-color .2s, background .2s;
+    }
+    .social-links a:hover { border-color: var(--rose); background: var(--rose); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    }
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-brand { grid-column: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">GlowBD</a>
+  <ul class="nav-links">
+    <li><a href="#categories">Shop</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#products" class="nav-cta">Shop Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">✦ Made for Bangladeshi Beauty ✦</p>
+  <h1>Your <em>Glow</em>,<br>Your Story</h1>
+  <p class="hero-sub">Premium cosmetics crafted for South Asian skin tones. Affordable luxury from ৳500 to ৳3,000.</p>
+  <div class="hero-actions">
+    <a href="#products" class="btn-primary">Explore Collection</a>
+    <a href="#categories" class="btn-ghost">View Categories</a>
+  </div>
+  <div class="hero-img">
+    <div class="product-showcase">
+      <div class="product-pill"><span class="emoji">💄</span><span>Lip Colour</span></div>
+      <div class="product-pill"><span class="emoji">✨</span><span>Highlighter</span></div>
+      <div class="product-pill"><span class="emoji">🌸</span><span>Skincare</span></div>
+      <div class="product-pill"><span class="emoji">👁️</span><span>Eye Liner</span></div>
+      <div class="product-pill"><span class="emoji">🧴</span><span>Foundation</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>Free Delivery in Dhaka</span><span>✦</span>
+    <span>Halal Certified</span><span>✦</span>
+    <span>Cruelty-Free</span><span>✦</span>
+    <span>৳500 – ৳3,000</span><span>✦</span>
+    <span>Cash on Delivery Available</span><span>✦</span>
+    <span>Authentic Products</span><span>✦</span>
+    <span>Free Delivery in Dhaka</span><span>✦</span>
+    <span>Halal Certified</span><span>✦</span>
+    <span>Cruelty-Free</span><span>✦</span>
+    <span>৳500 – ৳3,000</span><span>✦</span>
+    <span>Cash on Delivery Available</span><span>✦</span>
+    <span>Authentic Products</span><span>✦</span>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="categories" id="categories">
+  <p class="section-label">Browse by Category</p>
+  <h2 class="section-title">Find Your Perfect Look</h2>
+  <p class="section-sub">From bold lips to dewy skin — every product chosen for warm, South Asian skin tones.</p>
+  <div class="cat-grid">
+    <div class="cat-card lip">
+      <div class="bg">💄</div>
+      <div class="cat-label">Lips<small>Lipstick · Gloss · Liner</small></div>
+    </div>
+    <div class="cat-card skin">
+      <div class="bg">🧴</div>
+      <div class="cat-label">Skincare<small>Serum · Moisturiser</small></div>
+    </div>
+    <div class="cat-card eye">
+      <div class="bg">👁️</div>
+      <div class="cat-label">Eyes<small>Kajal · Shadow · Liner</small></div>
+    </div>
+    <div class="cat-card face">
+      <div class="bg">✨</div>
+      <div class="cat-label">Face<small>Foundation · Blush · Glow</small></div>
+    </div>
+    <div class="cat-card hair">
+      <div class="bg">💆</div>
+      <div class="cat-label">Hair<small>Mask · Oil · Serum</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="products-header">
+    <div>
+      <p class="section-label">Our Products</p>
+      <h2 class="section-title">Bestsellers</h2>
+      <div class="filter-tabs">
+        <button class="tab active">All</button>
+        <button class="tab">Lips</button>
+        <button class="tab">Skin</button>
+        <button class="tab">Eyes</button>
+        <button class="tab">Face</button>
+      </div>
+    </div>
+    <a href="#" class="btn-ghost" style="height:fit-content">View All →</a>
+  </div>
+  <div class="product-grid">
+
+    <div class="product-card">
+      <div class="product-img" style="background:linear-gradient(135deg,#fce4ec,#f8bbd0);">
+        💄<span class="badge">Bestseller</span>
+      </div>
+      <div class="product-info">
+        <p class="product-cat">Lips</p>
+        <div class="stars">★★★★★</div>
+        <h3 class="product-name">Velvet Matte Lipstick</h3>
+        <p class="product-desc">Long-lasting 18-hr formula in 12 shades perfect for Bengali skin.</p>
+        <div class="product-footer">
+          <p class="product-price">৳650 <span>BDT</span></p>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="background:linear-gradient(135deg,#fff8e1,#ffe082);">
+        ✨<span class="badge new">New</span>
+      </div>
+      <div class="product-info">
+        <p class="product-cat">Face</p>
+        <div class="stars">★★★★☆</div>
+        <h3 class="product-name">Golden Hour Highlighter</h3>
+        <p class="product-desc">Warm champagne glow that complements golden undertones beautifully.</p>
+        <div class="product-footer">
+          <p class="product-price">৳1,200 <span>BDT</span></p>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="background:linear-gradient(135deg,#e8eaf6,#c5cae9);">
+        👁️
+      </div>
+      <div class="product-info">
+        <p class="product-cat">Eyes</p>
+        <div class="stars">★★★★★</div>
+        <h3 class="product-name">Smudge-Free Kajal</h3>
+        <p class="product-desc">Waterproof formula — survives humidity, sweat and long rickshaw rides.</p>
+        <div class="product-footer">
+          <p class="product-price">৳500 <span>BDT</span></p>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="background:linear-gradient(135deg,#fce4ec,#f48fb1);">
+        🌸<span class="badge">Popular</span>
+      </div>
+      <div class="product-info">
+        <p class="product-cat">Skincare</p>
+        <div class="stars">★★★★★</div>
+        <h3 class="product-name">Brightening Vitamin C Serum</h3>
+        <p class="product-desc">Fade dark spots and uneven tone. Results in 4 weeks.</p>
+        <div class="product-footer">
+          <p class="product-price">৳2,500 <span>BDT</span></p>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);">
+        🧴
+      </div>
+      <div class="product-info">
+        <p class="product-cat">Skincare</p>
+        <div class="stars">★★★★☆</div>
+        <h3 class="product-name">Oil-Control Moisturiser</h3>
+        <p class="product-desc">Lightweight, non-greasy — perfect for Dhaka's warm weather.</p>
+        <div class="product-footer">
+          <p class="product-price">৳1,800 <span>BDT</span></p>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="background:linear-gradient(135deg,#fce4ec,#ff8a80);">
+        💋<span class="badge new">New</span>
+      </div>
+      <div class="product-info">
+        <p class="product-cat">Lips</p>
+        <div class="stars">★★★★★</div>
+        <h3 class="product-name">Glossy Lip Plumper</h3>
+        <p class="product-desc">Hydrating gloss with a subtle plumping effect. 8 shades.</p>
+        <div class="product-footer">
+          <p class="product-price">৳750 <span>BDT</span></p>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="background:linear-gradient(135deg,#fff3e0,#ffe0b2);">
+        🌟
+      </div>
+      <div class="product-info">
+        <p class="product-cat">Face</p>
+        <div class="stars">★★★★★</div>
+        <h3 class="product-name">Dewy Skin Foundation</h3>
+        <p class="product-desc">20 shades including deep warm tones for Bangladeshi skin.</p>
+        <div class="product-footer">
+          <p class="product-price">৳2,800 <span>BDT</span></p>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img" style="background:linear-gradient(135deg,#f3e5f5,#e1bee7);">
+        💆
+      </div>
+      <div class="product-info">
+        <p class="product-cat">Hair</p>
+        <div class="stars">★★★★☆</div>
+        <h3 class="product-name">Hair Growth Serum</h3>
+        <p class="product-desc">Strengthens roots, reduces breakage. Clinically tested formula.</p>
+        <div class="product-footer">
+          <p class="product-price">৳1,500 <span>BDT</span></p>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FEATURE STRIP -->
+<div class="features">
+  <div class="feat-item">
+    <div class="feat-icon">🚚</div>
+    <p class="feat-title">Free Delivery</p>
+    <p class="feat-desc">Free delivery in Dhaka on orders over ৳1,000</p>
+  </div>
+  <div class="feat-item">
+    <div class="feat-icon">✅</div>
+    <p class="feat-title">100% Authentic</p>
+    <p class="feat-desc">All products are genuine, quality-assured</p>
+  </div>
+  <div class="feat-item">
+    <div class="feat-icon">🕌</div>
+    <p class="feat-title">Halal Certified</p>
+    <p class="feat-desc">Formulations verified halal-friendly</p>
+  </div>
+  <div class="feat-item">
+    <div class="feat-icon">💳</div>
+    <p class="feat-title">Cash on Delivery</p>
+    <p class="feat-desc">Pay when you receive — no risk</p>
+  </div>
+  <div class="feat-item">
+    <div class="feat-icon">↩️</div>
+    <p class="feat-title">Easy Returns</p>
+    <p class="feat-desc">7-day return policy, no questions asked</p>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <p class="section-label">Real Reviews</p>
+  <h2 class="section-title" style="margin:0 auto;">What Our Customers Say</h2>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"The Velvet Matte lipstick stayed on all day during my cousin's wedding — through biryani, mishti, everything! Absolutely love it."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">👩</div>
+        <div><p class="testi-name">Nusrat J.</p><p class="testi-loc">Dhaka, Dhanmondi</p></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Finally a foundation with my exact shade. I'm NW45 and the Dewy Foundation in shade 16 is a perfect match. My skin looks flawless!"</p>
+      <div class="testi-author">
+        <div class="testi-avatar">👩🏽</div>
+        <div><p class="testi-name">Rabeya K.</p><p class="testi-loc">Chittagong</p></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★☆</div>
+      <p class="testi-text">"The Vitamin C serum made a visible difference in 3 weeks. My dark spots are noticeably lighter. Fast delivery to Sylhet too!"</p>
+      <div class="testi-author">
+        <div class="testi-avatar">🧕</div>
+        <div><p class="testi-name">Fatema B.</p><p class="testi-loc">Sylhet</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMO -->
+<section class="promo">
+  <h2>Your First Order? Get 10% Off 🎉</h2>
+  <p>Use code <strong>GLOW10</strong> at checkout. Valid for all products ৳800 and above.</p>
+  <a href="#products" class="btn-white">Shop the Collection</a>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">GlowBD</div>
+      <p>Premium cosmetics curated for Bangladeshi women. Beauty that celebrates you.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">Lips</a></li>
+        <li><a href="#">Skin</a></li>
+        <li><a href="#">Eyes</a></li>
+        <li><a href="#">Face</a></li>
+        <li><a href="#">Hair</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <ul>
+        <li><a href="#">How to Order</a></li>
+        <li><a href="#">Delivery Info</a></li>
+        <li><a href="#">Return Policy</a></li>
+        <li><a href="#">Track Order</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">Facebook Page</a></li>
+        <li><a href="#">WhatsApp</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="mailto:hello@glowbd.com">hello@glowbd.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 GlowBD. All rights reserved.</p>
+    <div class="social-links">
+      <a href="#" title="Facebook">📘</a>
+      <a href="#" title="Instagram">📸</a>
+      <a href="#" title="WhatsApp">💬</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Tab filter (UI only demo)
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // Add to cart feedback
+  document.querySelectorAll('.add-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      this.textContent = '✓';
+      this.style.background = '#27ae60';
+      setTimeout(() => {
+        this.textContent = '+';
+        this.style.background = '';
+      }, 1200);
+    });
+  });
+
+  // Scroll fade-in
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.product-card, .cat-card, .testi-card, .feat-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity .55s ease, transform .55s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
